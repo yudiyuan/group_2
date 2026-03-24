@@ -1,6 +1,5 @@
 package com.example.expense_tracker.activities;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -11,7 +10,7 @@ import com.example.expense_tracker.R;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button btnViewExpenses, btnAddExpense;
+    Button btnViewExpenses, btnAddExpense, btnStatistics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +19,7 @@ public class HomeActivity extends AppCompatActivity {
 
         btnViewExpenses = findViewById(R.id.btnViewExpenses);
         btnAddExpense = findViewById(R.id.btnAddExpense);
+        btnStatistics = findViewById(R.id.btnStatistics);
 
         btnViewExpenses.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, ExpenseListActivity.class);
@@ -28,6 +28,11 @@ public class HomeActivity extends AppCompatActivity {
 
         btnAddExpense.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, AddExpenseActivity.class);
+            startActivity(intent);
+        });
+
+        btnStatistics.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, StatisticsActivity.class);
             startActivity(intent);
         });
     }
