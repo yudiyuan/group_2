@@ -50,5 +50,13 @@ public class AddExpenseActivity extends AppCompatActivity {
 
             }
         });
+        Button btnHome = findViewById(R.id.btnHome);
+
+        btnHome.setOnClickListener(v -> {
+            Intent intent = new Intent(AddExpenseActivity.this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+
     }
 }

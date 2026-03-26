@@ -3,39 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="24dp">
 
-    <TextView
-        android:id="@+id/tvStatisticsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Expense Statistics"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="744dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="40dp">
 
-    <TextView
-        android:id="@+id/tvTotalExpense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total Expense: €0.0"
-        android:textSize="20sp"
-        android:layout_marginBottom="16dp" />
+        <TextView
+            android:id="@+id/tvTotalExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Total Expense: €0.0"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/tvTodayExpense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Today's Expense: €0.0"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tvTodayExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today's Expense: €0.0"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/tvCategorySummary"
+        <TextView
+            android:id="@+id/tvCategorySummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Summary"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+    <Button
+        android:id="@+id/btnHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Category Summary"
-        android:textSize="18sp"
-        android:layout_marginTop="24dp" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:text="Home" />
 
 </LinearLayout>

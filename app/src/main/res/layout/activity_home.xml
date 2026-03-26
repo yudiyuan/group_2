@@ -33,19 +33,27 @@
 
         <Button
             android:id="@+id/btnAddExpense"
-            android:layout_width="wrap_content"
+            android:layout_width="149dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Add Expense" />
 
         <Button
             android:id="@+id/btnStatistics"
-            android:layout_width="wrap_content"
+            android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="View Statistics" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:text="Logout" />
 
     <TextView
         android:layout_width="match_parent"
