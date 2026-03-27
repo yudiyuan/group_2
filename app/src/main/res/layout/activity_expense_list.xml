@@ -14,6 +14,13 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp" />
 
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:layout_marginBottom="8dp" />
+
     <ListView
         android:id="@+id/listViewExpenses"
         android:layout_width="match_parent"
@@ -30,38 +37,35 @@
         android:textSize="18sp"
         android:visibility="gone" />
 
-
-    <Button
-        android:id="@+id/btnSort"
-        android:layout_width="146dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="Sort" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         android:layout_marginTop="16dp">
 
         <Button
-            android:id="@+id/addExpense"
-            android:layout_width="0dp"
+            android:id="@+id/btnBackHome"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add Expense"
-            android:layout_marginEnd="12dp" />
+            android:minHeight="48dp"
+            android:text="Home"
+            android:layout_marginEnd="8dp"/>
 
         <Button
-            android:id="@+id/btnBackHome"
-            android:layout_width="0dp"
+            android:id="@+id/btnAddExpense"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Home"
-            android:layout_marginStart="12dp" />
+            android:minHeight="48dp"
+            android:text="Add"
+            android:layout_marginEnd="8dp"/>
 
+        <Button
+            android:id="@+id/btnSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="Sort" />
     </LinearLayout>
 
 </LinearLayout>
