@@ -2,12 +2,12 @@ package com.example.expense_tracker.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.expense_tracker.R;
 import com.example.expense_tracker.DataManager;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +18,7 @@ import java.util.Map;
 public class StatisticsActivity extends AppCompatActivity {
 
     TextView tvTotalExpense, tvTodayExpense, tvCategorySummary;
+    Button btnHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,14 @@ public class StatisticsActivity extends AppCompatActivity {
         tvTotalExpense = findViewById(R.id.tvTotalExpense);
         tvTodayExpense = findViewById(R.id.tvTodayExpense);
         tvCategorySummary = findViewById(R.id.tvCategorySummary);
+        btnHome = findViewById(R.id.btnHome);
+
+
+        btnHome.setOnClickListener(v -> {
+            Intent intent = new Intent(StatisticsActivity.this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
 
         calculateExpenses();
     }
@@ -57,11 +66,8 @@ public class StatisticsActivity extends AppCompatActivity {
                         todayTotal += amount;
                     }
 
-                    if (categoryTotals.containsKey(category)) {
-                        categoryTotals.put(category, categoryTotals.get(category) + amount);
-                    } else {
-                        categoryTotals.put(category, amount);
-                    }
+                    categoryTotals.put(category,
+                            categoryTotals.getOrDefault(category, 0.0) + amount);
 
                 } catch (NumberFormatException e) {
                     e.printStackTrace();

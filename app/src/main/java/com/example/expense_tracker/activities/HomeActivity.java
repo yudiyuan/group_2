@@ -10,7 +10,7 @@ import com.example.expense_tracker.R;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button btnViewExpenses, btnAddExpense, btnStatistics;
+    Button btnViewExpenses, btnAddExpense, btnStatistics, btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +20,7 @@ public class HomeActivity extends AppCompatActivity {
         btnViewExpenses = findViewById(R.id.btnViewExpenses);
         btnAddExpense = findViewById(R.id.btnAddExpense);
         btnStatistics = findViewById(R.id.btnStatistics);
+        btnLogout = findViewById(R.id.btnLogout);
 
         btnViewExpenses.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, ExpenseListActivity.class);
@@ -33,6 +34,11 @@ public class HomeActivity extends AppCompatActivity {
 
         btnStatistics.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, StatisticsActivity.class);
+            startActivity(intent);
+        });
+        btnLogout.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
     }
