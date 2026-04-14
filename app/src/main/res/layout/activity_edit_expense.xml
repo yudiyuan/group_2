@@ -11,11 +11,11 @@
         android:layout_height="wrap_content"
         android:hint="Title" />
 
-    <EditText
-        android:id="@+id/etCategory"
+    <Spinner
+        android:id="@+id/spCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Category" />
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:id="@+id/etAmount"
@@ -28,7 +28,7 @@
         android:id="@+id/etDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Date" />
+        android:hint="Date (yyyy-MM-dd)" />
 
     <Button
         android:id="@+id/btnUpdateExpense"

@@ -97,7 +97,7 @@ public class ExpenseListActivity extends AppCompatActivity {
     }
 
     private void setupSpinner() {
-        String[] categories = {"All", "Food", "Transport", "Shopping", "Utilities", "Study"};
+        String[] categories = {"All", "Food", "Transport", "Shopping", "Utilities", "Study", "Other"};
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
                 this,
