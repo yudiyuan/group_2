@@ -50,7 +50,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             }
 
             Expense expense = new Expense(title, category, amount, date);
-            DataManager.addExpense(expense);
+            DataManager.addExpense(this, expense);
 
             Toast.makeText(this, "Expense added", Toast.LENGTH_SHORT).show();
 

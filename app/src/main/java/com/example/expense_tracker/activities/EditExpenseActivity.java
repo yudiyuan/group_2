@@ -63,7 +63,7 @@ public class EditExpenseActivity extends AppCompatActivity {
 
             if (expense != null) {
                 Expense updatedExpense = new Expense(expense.getId(), title, category, amount, date);
-                DataManager.updateExpense(updatedExpense);
+                DataManager.updateExpense(this, updatedExpense);
 
                 Toast.makeText(this, "Expense updated", Toast.LENGTH_SHORT).show();
 
