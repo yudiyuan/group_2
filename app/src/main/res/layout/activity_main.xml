@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:padding="24dp">
 
-
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -27,22 +26,34 @@
         android:textColor="#666666"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <Button
+        android:id="@+id/btnGoRegister"
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="160dp"
+        android:elevation="6dp"
+        android:text="Register"
+        android:tint="#9B6BFF"
+        app:layout_constraintBottom_toTopOf="@id/tvCreatedBy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnGoLogin"
         android:layout_width="157dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:elevation="6dp"
         android:text="Login"
         android:tint="#9B6BFF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnGoRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.887" />
+        app:layout_constraintVertical_bias="0.969" />
 
     <TextView
         android:id="@+id/tvCreatedBy"
@@ -57,4 +68,3 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

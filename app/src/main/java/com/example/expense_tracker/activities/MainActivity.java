@@ -1,6 +1,7 @@
 package com.example.expense_tracker.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -11,7 +12,7 @@ import com.example.expense_tracker.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnGoLogin;
+    Button btnGoLogin, btnGoRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +21,22 @@ public class MainActivity extends AppCompatActivity {
 
         DataManager.loadExpenses(this);
 
-        btnGoLogin = findViewById(R.id.btnGoLogin);
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        if (prefs.getBoolean("is_logged_in", false)) {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+            return;
+        }
 
-        btnGoLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-        });
+        btnGoLogin = findViewById(R.id.btnGoLogin);
+        btnGoRegister = findViewById(R.id.btnGoRegister);
+
+        btnGoLogin.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, LoginActivity.class))
+        );
+
+        btnGoRegister.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, RegisterActivity.class))
+        );
     }
 }
