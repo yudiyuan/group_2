@@ -1,5 +1,6 @@
 package com.example.expense_tracker.activities;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.expense_tracker.DataManager;
 import com.example.expense_tracker.R;
 import com.example.expense_tracker.model.Expense;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 public class EditExpenseActivity extends AppCompatActivity {
 
@@ -36,6 +40,10 @@ public class EditExpenseActivity extends AppCompatActivity {
         etDate = findViewById(R.id.etDate);
         btnUpdateExpense = findViewById(R.id.btnUpdateExpense);
 
+        etDate.setFocusable(false);
+        etDate.setClickable(true);
+        etDate.setOnClickListener(v -> showDatePicker());
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -52,7 +60,6 @@ public class EditExpenseActivity extends AppCompatActivity {
             etAmount.setText(String.valueOf(expense.getAmount()));
             etDate.setText(expense.getDate());
 
-            // Set spinner selection
             for (int i = 0; i < categories.length; i++) {
                 if (categories[i].equals(expense.getCategory())) {
                     spCategory.setSelection(i);
@@ -96,5 +103,35 @@ public class EditExpenseActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void showDatePicker() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        String currentDateText = etDate.getText().toString();
+        if (!TextUtils.isEmpty(currentDateText)) {
+            try {
+                String[] parts = currentDateText.split("-");
+                if (parts.length == 3) {
+                    year = Integer.parseInt(parts[0]);
+                    month = Integer.parseInt(parts[1]) - 1;
+                    day = Integer.parseInt(parts[2]);
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    String formattedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
+                    etDate.setText(formattedDate);
+                },
+                year, month, day
+        );
+        datePickerDialog.show();
     }
 }

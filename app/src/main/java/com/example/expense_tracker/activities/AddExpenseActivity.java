@@ -1,5 +1,6 @@
 package com.example.expense_tracker.activities;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.expense_tracker.DataManager;
 import com.example.expense_tracker.R;
 import com.example.expense_tracker.model.Expense;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 public class AddExpenseActivity extends AppCompatActivity {
 
@@ -33,6 +37,10 @@ public class AddExpenseActivity extends AppCompatActivity {
         etAmount = findViewById(R.id.etAmount);
         etDate = findViewById(R.id.etDate);
         btnSaveExpense = findViewById(R.id.btnSaveExpense);
+
+        etDate.setFocusable(false);
+        etDate.setClickable(true);
+        etDate.setOnClickListener(v -> showDatePicker());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -79,5 +87,22 @@ public class AddExpenseActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
+    }
+
+    private void showDatePicker() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    String formattedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
+                    etDate.setText(formattedDate);
+                },
+                year, month, day
+        );
+        datePickerDialog.show();
     }
 }
