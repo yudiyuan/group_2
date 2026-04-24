@@ -65,6 +65,11 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (!password.matches(".*\\d.*")) {
+            Toast.makeText(this, "Password must contain at least one number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (prefs.contains("user_" + username)) {
             Toast.makeText(this, "Username already exists", Toast.LENGTH_SHORT).show();
             return;
