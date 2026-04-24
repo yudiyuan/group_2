@@ -2,8 +2,6 @@ package com.example.expense_tracker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,25 +9,27 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expense_tracker.DataManager;
 import com.example.expense_tracker.R;
+import com.example.expense_tracker.model.Expense;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ExpenseListActivity extends AppCompatActivity {
 
     ListView listViewExpenses;
-    Button btnBackHome, btnSort, btnAddExpense;
-    Spinner categorySpinner;
+    Button btnBackHome, btnAddExpense, btnSort;
     TextView tvNoExpenses;
+    Spinner categorySpinner;
 
-    List<String> displayedExpenses = new ArrayList<>();
     ArrayAdapter<String> adapter;
+    List<Expense> displayedExpenses = new ArrayList<>();
+    String currentCategory = "All";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,23 +38,10 @@ public class ExpenseListActivity extends AppCompatActivity {
 
         listViewExpenses = findViewById(R.id.listViewExpenses);
         btnBackHome = findViewById(R.id.btnBackHome);
-        btnSort = findViewById(R.id.btnSort);
         btnAddExpense = findViewById(R.id.btnAddExpense);
-        categorySpinner = findViewById(R.id.categorySpinner);
+        btnSort = findViewById(R.id.btnSort);
         tvNoExpenses = findViewById(R.id.tvNoExpenses);
-
-        if (DataManager.expenses == null) {
-            DataManager.expenses = new ArrayList<>();
-        }
-        displayedExpenses.clear();
-        displayedExpenses.addAll(DataManager.expenses);
-
-        adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_list_item_1,
-                displayedExpenses
-        );
-        listViewExpenses.setAdapter(adapter);
+        categorySpinner = findViewById(R.id.categorySpinner);
 
         setupSpinner();
 
@@ -69,60 +56,109 @@ public class ExpenseListActivity extends AppCompatActivity {
         });
 
         btnSort.setOnClickListener(v -> {
-            Collections.sort(DataManager.expenses, (e1, e2) -> {
-                String[] p1 = e1.split(" - ");
-                String[] p2 = e2.split(" - ");
-                if (p1.length >= 3 && p2.length >= 3) {
-                    double a1 = Double.parseDouble(p1[2].replace("€", "").trim());
-                    double a2 = Double.parseDouble(p2[2].replace("€", "").trim());
-                    return Double.compare(a1, a2);
-                }
-                return 0;
-            });
-            String currentCategory = categorySpinner.getSelectedItem().toString();
-            filterList(currentCategory);
+            List<Expense> allExpenses = DataManager.getAllExpenses();
+            allExpenses.sort((e1, e2) -> Double.compare(e1.getAmount(), e2.getAmount()));
+            applyFilter(currentCategory);
+            Toast.makeText(this, "Sorted by amount", Toast.LENGTH_SHORT).show();
         });
 
-        setupSwipeToDelete();
+        listViewExpenses.setOnItemClickListener((parent, view, position, id) -> {
+            Expense selectedExpense = displayedExpenses.get(position);
+
+            Intent intent = new Intent(ExpenseListActivity.this, EditExpenseActivity.class);
+            intent.putExtra("expense_id", selectedExpense.getId());
+            startActivity(intent);
+        });
+
+        listViewExpenses.setOnItemLongClickListener((parent, view, position, id) -> {
+            Expense selectedExpense = displayedExpenses.get(position);
+
+            new android.app.AlertDialog.Builder(this)
+                    .setTitle("Delete Expense")
+                    .setMessage("Are you sure you want to delete this expense?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        DataManager.deleteExpense(this, selectedExpense.getId());
+                        applyFilter(currentCategory);
+                        Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+
+            return true;
+        });
+
+        applyFilter(currentCategory);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        applyFilter(currentCategory);
     }
 
     private void setupSpinner() {
-        String[] categories = {"All", "Food", "Transport", "Shopping", "Utilities"};
+        String[] categories = {"All", "Food", "Transport", "Shopping", "Utilities", "Study", "Other"};
+
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_dropdown_item,
+                android.R.layout.simple_spinner_item,
                 categories
         );
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(spinnerAdapter);
+
+        categorySpinner.setSelection(0);
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                filterList(categories[position]);
+                currentCategory = categories[position];
+                applyFilter(currentCategory);
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
-    private void filterList(String category) {
+    private void applyFilter(String category) {
+        List<Expense> allExpenses = DataManager.getAllExpenses();
         displayedExpenses.clear();
 
         if ("All".equals(category)) {
-            displayedExpenses.addAll(DataManager.expenses);
+            displayedExpenses.addAll(allExpenses);
         } else {
-            for (String expense : DataManager.expenses) {
-                if (expense.contains(category)) {
+            for (Expense expense : allExpenses) {
+                if (expense.getCategory() != null &&
+                        expense.getCategory().equalsIgnoreCase(category)) {
                     displayedExpenses.add(expense);
                 }
             }
         }
 
-        adapter.notifyDataSetChanged();
-        updateEmptyState();
+        updateListView();
     }
 
-    private void updateEmptyState() {
+    private void updateListView() {
+        List<String> displayList = new ArrayList<>();
+
+        for (Expense e : displayedExpenses) {
+            String item = e.getTitle() + " | "
+                    + e.getCategory() + " | €"
+                    + e.getAmount() + " | "
+                    + e.getDate();
+            displayList.add(item);
+        }
+
+        adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                displayList
+        );
+
+        listViewExpenses.setAdapter(adapter);
+
         if (displayedExpenses.isEmpty()) {
             tvNoExpenses.setVisibility(View.VISIBLE);
             listViewExpenses.setVisibility(View.GONE);
@@ -130,32 +166,5 @@ public class ExpenseListActivity extends AppCompatActivity {
             tvNoExpenses.setVisibility(View.GONE);
             listViewExpenses.setVisibility(View.VISIBLE);
         }
-    }
-
-    private void setupSwipeToDelete() {
-        GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-            private static final int SWIPE_THRESHOLD = 100;
-            private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                float diffX = e2.getX() - e1.getX();
-                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    int position = listViewExpenses.pointToPosition((int) e1.getX(), (int) e1.getY());
-                    if (position != ListView.INVALID_POSITION) {
-                        String itemToDelete = displayedExpenses.get(position);
-                        DataManager.expenses.remove(itemToDelete);
-                        displayedExpenses.remove(position);
-
-                        adapter.notifyDataSetChanged();
-                        updateEmptyState();
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        listViewExpenses.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
     }
 }

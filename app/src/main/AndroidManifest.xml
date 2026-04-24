@@ -11,11 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Expensetracker">
 
+        <activity android:name=".activities.EditExpenseActivity" />
         <activity android:name=".activities.AddExpenseActivity" />
         <activity android:name=".activities.ExpenseListActivity" />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.StatisticsActivity" />
+        <activity android:name=".activities.RegisterActivity" />
 
         <activity
             android:name=".activities.MainActivity"

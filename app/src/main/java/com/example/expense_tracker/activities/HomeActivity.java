@@ -36,10 +36,19 @@ public class HomeActivity extends AppCompatActivity {
             Intent intent = new Intent(HomeActivity.this, StatisticsActivity.class);
             startActivity(intent);
         });
+
+
         btnLogout.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("is_logged_in", false)
+                    .remove("logged_in_user")
+                    .apply();
+
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
         });
     }
 }
