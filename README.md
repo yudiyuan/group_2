@@ -29,7 +29,7 @@ This project was built using **Java** in **Android Studio** and focuses on pract
 - Add new expenses
 - Edit existing expenses
 - Delete expenses
-- Swipe to delete items
+- Long press to delete items
 - View all expense records
 
 ### Smart Input UI
