@@ -1,100 +1,99 @@
-Expense Tracker (Group 2)
+# Expense Tracker – Group 2
 
-A simple Android application for tracking daily expenses. This project is developed as part of a Mobile Development group assignment.
+Expense Tracker is a native Android application developed as a group project for Mobile Development.  
+The app helps users record, organise, and review personal expenses through a clean mobile interface.
 
-Project Overview
+This project was built using **Java** in **Android Studio** and focuses on practical mobile app development concepts such as UI design, local data storage, activity navigation, and CRUD operations.
 
-Expense Tracker is designed to help users:
+---
 
-Record daily expenses
-Categorize transactions
-View spending summaries
-Manage personal finances
+## Team
 
-The project follows an incremental development approach, where features are implemented progressively.
+**Group 2**
 
-Features
-Implemented (Initial Version)
+---
 
+## Features
+
+### User Account System
+- User registration
+- User login
+- Local credential storage using SharedPreferences
+- Password validation:
+  - Minimum 8 characters
+  - At least one uppercase letter
+  - At least one number
+  - At least one special character
+
+### Expense Management
+- Add new expenses
+- Edit existing expenses
+- Delete expenses
+- Long press to delete items
+- View all expense records
+
+### Smart Input UI
+- Category selection using Spinner dropdown
+- Date input with calendar picker
+- Form validation for required fields
+
+### Data Management
+- Local storage for expenses
+- Data remains available after restarting app
+
+### Expense Organisation
+- Sort expenses
+- Filter expenses by category
+
+### Statistics
+- Total expenses overview
+- Daily spending summary
+- Category spending summary
+
+### Navigation & UX
+- Multi-screen navigation
+- Back button support
+- Improved layouts and responsive UI
+
+---
+
+## Technologies Used
+
+- Java
+- Android Studio
+- XML Layout Design
+- SharedPreferences
+- RecyclerView
+- Spinner
+- Intent Navigation
+
+---
+
+## Project Structure
+
+```text
+app/
+ ├── activities/
+ │   ├── MainActivity
+ │   ├── LoginActivity
+ │   ├── RegisterActivity
+ │   ├── HomeActivity
+ │   ├── AddExpenseActivity
+ │   ├── EditExpenseActivity
+ │   └── ExpenseListActivity
+ │
+ ├── model/
+ ├── utils/
+ └── res/layout/
+
+Screens Included
+Welcome Screen
 Login Screen
+Register Screen
+Home Dashboard
+Add Expense Screen
+Expense List Screen
+Edit Expense Screen
+Statistics Screen
 
-Basic validation (username and password must not be empty)
 
-Home Screen
-
-Displays a welcome message
-Provides navigation to main features
-
-Expense List
-
-Displays all transactions
-Shows "No records yet" when there is no data
-
-Add Expense
-
-Allows users to input expense details (name, amount, category, date)
-
-Navigation
-
-Supports navigation between activities
-Includes back navigation functionality
-In Progress
-Swipe to delete transactions
-Sorting and filtering functionality
-Statistics page (total expenses, daily expenses, category summary)
-Tech Stack
-
-Language: Java
-Platform: Android
-IDE: Android Studio
-
-Project Structure
-
-activities
-
-UI screens such as Login, Home, Expense List, Add Expense
-
-models
-
-Data models such as Transaction and Category
-
-utils
-
-Helper classes such as DataManager
-
-resources
-
-Layout files, strings, styles
-Setup and Installation
-Clone the repository:
-
-git clone https://github.com/yudiyuan/group_2.git
-
-Open the project in Android Studio
-Sync Gradle
-Run the application on an emulator or physical device
-
-Development Notes
-
-This is an early version of the application.
-
-There is currently no database integration. Data is stored locally and temporarily.
-
-The main focus of this version is to establish UI flow and core functionality.
-
-Work is distributed across team members using Trello for task management.
-
-Roadmap
-Add persistent storage (SQLite or Room)
-Improve user interface and user experience
-Implement statistics visualization
-Add proper authentication logic
-Refactor the project to a more structured architecture such as MVVM
-License
-
-This project is for educational purposes only.
-
-Acknowledgements
-
-University of Limerick
-Mobile Development Module
